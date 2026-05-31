@@ -457,17 +457,31 @@ body:hover .cursor { opacity: 1; }
   font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent);
 }
 .tabib-thumb {
-  background: #020d1f;
-  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+.tabib-thumb::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(2, 10, 28, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .tabib-thumb img {
+  position: relative; z-index: 1;
+  width: 78%; height: auto;
   object-fit: contain !important;
-  object-position: center center !important;
-  transform: rotate(-2deg) scale(1.08);
+  transform: rotate(-4deg) scale(1);
+  border-radius: 10px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.55);
   transition: transform 0.5s ease;
 }
 .project-card:hover .tabib-thumb img {
-  transform: rotate(0deg) scale(1.03);
+  transform: rotate(-1deg) scale(1.03);
 }
 .freelance-card { border-style: dashed; border-color: rgba(0,212,255,0.2); }
 .freelance-thumb {
@@ -476,23 +490,28 @@ body:hover .cursor { opacity: 1; }
   align-items: center; justify-content: center;
 }
 .freelance-logos {
-  display: flex; align-items: center; gap: 32px;
+  display: flex; align-items: center; gap: 24px;
 }
-.freelance-logo-wrap {
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
+.freelance-badge {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+  letter-spacing: -0.01em;
 }
-.freelance-logo-wrap img {
-  width: 56px; height: 56px;
-  object-fit: contain; border-radius: 12px;
-  background: #fff; padding: 6px;
+.freelancer-badge {
+  background: rgba(41, 178, 254, 0.12);
+  border: 1px solid rgba(41, 178, 254, 0.35);
+  color: #29B2FE;
 }
-.freelance-logo-wrap span {
-  font-family: var(--font-mono); font-size: 0.72rem;
-  color: var(--gray); letter-spacing: 0.05em;
+.upwork-badge {
+  background: rgba(20, 168, 0, 0.12);
+  border: 1px solid rgba(20, 168, 0, 0.35);
+  color: #6FDA44;
 }
 .freelance-logo-divider {
-  width: 1px; height: 50px;
-  background: rgba(0,212,255,0.2);
+  width: 1px; height: 40px;
+  background: rgba(255,255,255,0.1);
 }
 
 /* ── EXPERIENCE ────────────────────────────────────────────────────────────── */
