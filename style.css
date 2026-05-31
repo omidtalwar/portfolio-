@@ -222,7 +222,7 @@ body:hover .cursor { opacity: 1; }
 }
 .hero-name {
   font-family: 'Space Grotesk', var(--font-display);
-  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-size: clamp(3.8rem, 8vw, 7rem);
   font-weight: 700; line-height: 1.05;
   letter-spacing: -0.03em;
   margin-bottom: 28px;
@@ -299,7 +299,7 @@ body:hover .cursor { opacity: 1; }
 .about-grid {
   display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start;
 }
-.about-left .section-title { margin-bottom: 32px; }
+.about-left .section-title { margin-bottom: 32px; font-size: clamp(2.5rem, 5vw, 4rem); }
 .about-img-wrap { position: relative; display: inline-block; }
 .about-img-photo {
   width: 220px; height: 260px;
