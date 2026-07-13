@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Daftar: Income Expense Manager</title>
+<meta name="description" content="How Daftar collects, uses, stores, and protects your information.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Ledger paper palette — subject-derived: accounting "green-bar" paper + ink */
+    --paper:      #F6F6EF;
+    --paper-warm: #FBFBF5;
+    --rule:       #E2E7DA;   /* faint horizontal ledger ruling */
+    --rule-soft:  #ECEEE4;
+    --ink:        #1B1F1B;   /* body ink */
+    --ink-dim:    #5A6157;
+    --ink-faint:  #8A9083;
+    --green:      #1F6B47;   /* credit / income ink */
+    --green-deep: #124A30;
+    --coral:      #DB4C33;   /* debit / expense ink + margin spine */
+    --coral-soft: #F4D9D2;
+    --line:       #D4D9CB;
+    --card:       #FFFFFF;
+    --focus:      #1F6B47;
+    --maxw: 1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    /* faint ruled-ledger texture */
+    background-image:linear-gradient(to bottom, transparent 31px, var(--rule-soft) 31px, var(--rule-soft) 32px);
+    background-size:100% 32px;
+    color:var(--ink);
+    font-family:"Instrument Sans", system-ui, sans-serif;
+    font-size:17px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  a{color:var(--green-deep);text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .15s, color .15s;}
+  a:hover{color:var(--coral);border-color:var(--coral);}
+  a:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px;}
+
+  .mono{font-family:"JetBrains Mono", ui-monospace, monospace;}
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:56px 32px 0;
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-dim);
+  }
+  .brand .mark{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border:1.5px solid var(--ink);border-radius:5px;
+    font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:15px;letter-spacing:0;
+    color:var(--ink);
+  }
+  .brand .sep{flex:1;height:1px;background:var(--line);}
+
+  h1.doc-title{
+    font-family:"Space Grotesk", sans-serif;
+    font-weight:600;
+    font-size:clamp(2.4rem, 6vw, 4.2rem);
+    line-height:1.02;
+    letter-spacing:-.02em;
+    margin:28px 0 8px;
+    color:var(--ink);
+  }
+  .subtitle{
+    font-size:1.05rem;color:var(--ink-dim);max-width:60ch;margin:0 0 34px;
+  }
+
+  /* ledger "entry" header card */
+  .ledger-card{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--card);
+    overflow:hidden;
+    margin-bottom:14px;
+  }
+  .ledger-card .cell{
+    padding:16px 18px;
+    border-right:1px solid var(--rule);
+  }
+  .ledger-card .cell:last-child{border-right:none;}
+  .ledger-card .k{
+    font-family:"JetBrains Mono",monospace;
+    font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);
+    display:block;margin-bottom:6px;
+  }
+  .ledger-card .v{
+    font-family:"JetBrains Mono",monospace;
+    font-size:14px;font-weight:500;color:var(--ink);
+  }
+  .legend{
+    display:flex;gap:22px;flex-wrap:wrap;
+    font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.04em;color:var(--ink-dim);
+    margin-bottom:40px;
+  }
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .dot{width:9px;height:9px;border-radius:50%;}
+  .dot.credit{background:var(--green);}
+  .dot.debit{background:var(--coral);}
+
+  .notice{
+    border-left:3px solid var(--coral);
+    background:var(--coral-soft);
+    color:#6b2417;
+    padding:14px 18px;
+    border-radius:0 8px 8px 0;
+    font-size:.92rem;
+    margin:0 0 48px;
+  }
+  .notice strong{color:#8a2c1c;}
+
+  /* ---------- Layout ---------- */
+  .layout{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 32px 96px;
+    display:grid;
+    grid-template-columns:230px 1fr;
+    gap:64px;
+    align-items:start;
+  }
+
+  /* Table of contents — the ledger index */
+  nav.toc{
+    position:sticky;top:32px;
+    font-size:.86rem;
+  }
+  nav.toc .toc-head{
+    font-family:"JetBrains Mono",monospace;
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);
+    padding-bottom:10px;margin-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  nav.toc li{margin:0;}
+  nav.toc a{
+    display:flex;gap:10px;align-items:baseline;
+    padding:6px 0;border:none;color:var(--ink-dim);
+    line-height:1.35;
+  }
+  nav.toc a .num{
+    font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-faint);min-width:22px;
+  }
+  nav.toc a:hover{color:var(--coral);}
+  nav.toc a:hover .num{color:var(--coral);}
+
+  /* ---------- Content ---------- */
+  main{min-width:0;}
+  section.clause{
+    padding:34px 0;
+    border-top:1px solid var(--rule);
+    scroll-margin-top:24px;
+  }
+  section.clause:first-of-type{border-top:none;padding-top:4px;}
+
+  .clause-head{display:flex;gap:16px;align-items:baseline;margin-bottom:14px;}
+  .clause-head .sec{
+    font-family:"JetBrains Mono",monospace;
+    font-size:13px;font-weight:600;color:var(--coral);
+    padding-top:6px;
+  }
+  h2{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:600;font-size:1.6rem;line-height:1.15;letter-spacing:-.01em;
+    margin:0;color:var(--ink);
+  }
+  h3{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:500;font-size:1.08rem;margin:26px 0 8px;color:var(--green-deep);
+  }
+  p{margin:0 0 16px;}
+  main ul{margin:0 0 16px;padding:0;list-style:none;}
+  main ul li{
+    position:relative;padding-left:26px;margin-bottom:9px;
+  }
+  main ul li::before{
+    content:"";position:absolute;left:6px;top:12px;
+    width:6px;height:6px;background:var(--green);border-radius:1px;transform:rotate(45deg);
+  }
+  main ul li.debit::before{background:var(--coral);}
+
+  .kv{
+    font-family:"JetBrains Mono",monospace;font-size:.82rem;
+    color:var(--ink-dim);
+  }
+  em.fill{
+    font-style:normal;background:#FFF6CC;color:#6b5a12;
+    padding:1px 6px;border-radius:4px;border:1px dashed #D9C879;
+    font-family:"JetBrains Mono",monospace;font-size:.82em;
+  }
+
+  /* two-column ledger table for data collected */
+  .table{
+    border:1px solid var(--line);border-radius:9px;overflow:hidden;margin:8px 0 20px;background:var(--card);
+  }
+  .table .row{
+    display:grid;grid-template-columns:200px 1fr;border-top:1px solid var(--rule);
+  }
+  .table .row:first-child{border-top:none;background:var(--paper-warm);}
+  .table .row .c{padding:12px 16px;font-size:.92rem;}
+  .table .row .c:first-child{
+    border-right:1px solid var(--rule);
+    font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.02em;color:var(--green-deep);font-weight:500;
+  }
+  .table .row.head .c{
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;
+  }
+
+  footer.doc-foot{
+    max-width:var(--maxw);margin:0 auto;padding:34px 32px 80px;
+    border-top:1px solid var(--line);
+    font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.03em;color:var(--ink-faint);
+    display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+
+  @media (max-width: 900px){
+    .layout{grid-template-columns:1fr;gap:32px;}
+    nav.toc{position:static;}
+    nav.toc ol{columns:2;column-gap:26px;}
+    .ledger-card{grid-template-columns:repeat(2,1fr);}
+    .ledger-card .cell:nth-child(2){border-right:none;}
+    .ledger-card .cell:nth-child(1),.ledger-card .cell:nth-child(2){border-bottom:1px solid var(--rule);}
+    .table .row{grid-template-columns:1fr;}
+    .table .row .c:first-child{border-right:none;border-bottom:1px solid var(--rule);}
+  }
+  @media (max-width: 560px){
+    body{font-size:16px;}
+    .masthead,.layout,footer.doc-foot{padding-left:20px;padding-right:20px;}
+    nav.toc ol{columns:1;}
+    .ledger-card{grid-template-columns:1fr;}
+    .ledger-card .cell{border-right:none;border-bottom:1px solid var(--rule);}
+    .clause-head{flex-direction:column;gap:2px;}
+  }
+</style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="brand">
+      <span class="mark">د</span>
+      <span>Daftar · Income &amp; Expense Manager</span>
+      <span class="sep"></span>
+      <span>Field Ledger</span>
+    </div>
+
+    <h1 class="doc-title">Privacy Policy</h1>
+    <p class="subtitle">Daftar is your private ledger. This policy explains what we record, why we record it, where it lives, and the controls you have over it.</p>
+
+    <div class="ledger-card">
+      <div class="cell"><span class="k">Effective</span><span class="v">13 Jul 2026</span></div>
+      <div class="cell"><span class="k">Last updated</span><span class="v">13 Jul 2026</span></div>
+      <div class="cell"><span class="k">Applies to</span><span class="v">iOS · Android · Web</span></div>
+      <div class="cell"><span class="k">Version</span><span class="v">1.0</span></div>
+    </div>
+
+    <div class="legend">
+      <span><span class="dot credit"></span> data you give us</span>
+      <span><span class="dot debit"></span> data collected automatically</span>
+    </div>
+
+    <div class="notice">
+      <strong>Template notice —</strong> This document is a working draft tailored to Daftar's known stack (Flutter, Firebase, RevenueCat). Fields marked like <em class="fill">this</em> need your real details, and the whole policy should be reviewed by qualified legal counsel and checked against your actual data flows before you publish it or submit it to the app stores.
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <nav class="toc" aria-label="Contents">
+      <div class="toc-head">Index</div>
+      <ol>
+        <li><a href="#s1"><span class="num">01</span> Who we are</a></li>
+        <li><a href="#s2"><span class="num">02</span> Information we collect</a></li>
+        <li><a href="#s3"><span class="num">03</span> How we use it</a></li>
+        <li><a href="#s4"><span class="num">04</span> Legal bases</a></li>
+        <li><a href="#s5"><span class="num">05</span> Storage &amp; security</a></li>
+        <li><a href="#s6"><span class="num">06</span> Service providers</a></li>
+        <li><a href="#s7"><span class="num">07</span> Sharing &amp; disclosure</a></li>
+        <li><a href="#s8"><span class="num">08</span> International transfers</a></li>
+        <li><a href="#s9"><span class="num">09</span> Retention</a></li>
+        <li><a href="#s10"><span class="num">10</span> Your rights</a></li>
+        <li><a href="#s11"><span class="num">11</span> Children</a></li>
+        <li><a href="#s12"><span class="num">12</span> Local storage</a></li>
+        <li><a href="#s13"><span class="num">13</span> Changes</a></li>
+        <li><a href="#s14"><span class="num">14</span> Contact</a></li>
+      </ol>
+    </nav>
+
+    <main>
+
+      <section class="clause" id="s1">
+        <div class="clause-head"><span class="sec">§01</span><h2>Who we are</h2></div>
+        <p>Daftar: Income Expense Manager (“Daftar”, “the app”, “we”, “us”) is a personal finance app that helps you record income and expenses, categorize transactions, and understand your money. This policy is provided by <em class="fill">[Company legal name]</em>, located at <em class="fill">[registered address]</em>, the data controller responsible for your information.</p>
+        <p>By using Daftar you agree to the handling of information described here. If you do not agree, please do not use the app.</p>
+      </section>
+
+      <section class="clause" id="s2">
+        <div class="clause-head"><span class="sec">§02</span><h2>Information we collect</h2></div>
+        <p>We keep collection to what the ledger actually needs. Daftar does <strong>not</strong> connect to your bank, and we do not ask for bank login credentials or card numbers — every transaction is one you enter or import yourself.</p>
+
+        <h3>Information you provide</h3>
+        <div class="table">
+          <div class="row head"><div class="c">Category</div><div class="c">What it includes</div></div>
+          <div class="row"><div class="c">Account</div><div class="c">Your name, email address, and — if you sign in that way — the identifier from Google or Apple. A password or authentication token is handled by our sign-in provider, not stored by us in readable form.</div></div>
+          <div class="row"><div class="c">Financial entries</div><div class="c">The transactions, amounts, dates, categories, accounts, notes, and any receipts or images you add to your ledger.</div></div>
+          <div class="row"><div class="c">Preferences</div><div class="c">Currency, language, theme, and app settings.</div></div>
+          <div class="row"><div class="c">Support</div><div class="c">Anything you send us when you contact support or give feedback.</div></div>
+        </div>
+
+        <h3>Information collected automatically</h3>
+        <ul>
+          <li class="debit"><strong>Device &amp; app data</strong> — device model, operating system, app version, language, and time zone.</li>
+          <li class="debit"><strong>Usage &amp; diagnostics</strong> — which features are used and anonymous crash and performance reports, so we can fix problems and improve the app.</li>
+          <li class="debit"><strong>Purchase data</strong> — your subscription status, plan, and purchase history (managed through the app stores and our subscription provider). We never receive your full payment card details.</li>
+        </ul>
+      </section>
+
+      <section class="clause" id="s3">
+        <div class="clause-head"><span class="sec">§03</span><h2>How we use your information</h2></div>
+        <ul>
+          <li>To provide the core ledger: saving your entries and syncing them across your devices.</li>
+          <li>To generate summaries, categories, and insights from the data you enter.</li>
+          <li>To manage your account, subscription, and access to paid features.</li>
+          <li>To keep the app secure, prevent abuse, and debug crashes.</li>
+          <li>To respond to your support requests.</li>
+          <li>To send essential service messages (for example, about changes to this policy). Marketing messages, if any, are only sent with your consent and can be turned off at any time.</li>
+        </ul>
+        <h3>Automated insights &amp; AI features</h3>
+        <p>Daftar includes features that automatically categorize transactions and surface insights. <em class="fill">[Describe here whether this runs on-device, in your own cloud, or through a third-party AI provider — and if entry data leaves your systems for processing.]</em> These features assist you and do not make decisions with legal or similarly significant effects about you.</p>
+      </section>
+
+      <section class="clause" id="s4">
+        <div class="clause-head"><span class="sec">§04</span><h2>Legal bases for processing</h2></div>
+        <p>Where the GDPR or similar laws apply, we rely on these bases:</p>
+        <ul>
+          <li><strong>Contract</strong> — to deliver the app and features you sign up for.</li>
+          <li><strong>Legitimate interests</strong> — to secure, maintain, and improve the app, balanced against your rights.</li>
+          <li><strong>Consent</strong> — for optional things like marketing or non-essential analytics, which you can withdraw at any time.</li>
+          <li><strong>Legal obligation</strong> — where we must retain or disclose information to comply with the law.</li>
+        </ul>
+      </section>
+
+      <section class="clause" id="s5">
+        <div class="clause-head"><span class="sec">§05</span><h2>Storage &amp; security</h2></div>
+        <p>Your ledger data is stored on Google Firebase infrastructure and protected in transit and at rest with industry-standard encryption. Access is restricted to authenticated requests tied to your account.</p>
+        <p>No system is perfectly secure, so we cannot guarantee absolute security, but we take reasonable technical and organizational measures to protect your information and to detect and respond to incidents. If a breach affects your data, we will notify you and the relevant authorities as required by law.</p>
+      </section>
+
+      <section class="clause" id="s6">
+        <div class="clause-head"><span class="sec">§06</span><h2>Service providers</h2></div>
+        <p>We work with a small number of trusted providers who process data on our behalf, under contracts that limit them to our instructions:</p>
+        <div class="table">
+          <div class="row head"><div class="c">Provider</div><div class="c">Purpose</div></div>
+          <div class="row"><div class="c">Google Firebase</div><div class="c">Authentication, database and sync, hosting, crash reporting, and analytics.</div></div>
+          <div class="row"><div class="c">RevenueCat</div><div class="c">Managing subscriptions and in-app purchases.</div></div>
+          <div class="row"><div class="c">Apple / Google Play</div><div class="c">Processing payments and delivering the app. Payment details are handled by the stores, not by us.</div></div>
+          <div class="row"><div class="c"><em class="fill">[AI provider]</em></div><div class="c"><em class="fill">[List any analytics, email, or AI service that receives data, or remove this row.]</em></div></div>
+        </div>
+      </section>
+
+      <section class="clause" id="s7">
+        <div class="clause-head"><span class="sec">§07</span><h2>Sharing &amp; disclosure</h2></div>
+        <p><strong>We do not sell your personal information, and we do not share your financial entries for advertising.</strong> We disclose information only:</p>
+        <ul>
+          <li>to the service providers listed above, to run the app;</li>
+          <li>when you ask us to, or you export or share data yourself;</li>
+          <li>to comply with a valid legal request, or to protect the rights, safety, and security of our users and the app;</li>
+          <li>in connection with a merger, acquisition, or sale of assets — in which case we will notify you and this policy will continue to apply to your information.</li>
+        </ul>
+      </section>
+
+      <section class="clause" id="s8">
+        <div class="clause-head"><span class="sec">§08</span><h2>International data transfers</h2></div>
+        <p>Daftar serves users across many countries, and our providers may process data in regions including the <em class="fill">[list primary data regions, e.g. the United States and the EU]</em>. Where data is transferred across borders, we rely on appropriate safeguards such as Standard Contractual Clauses to protect it to the standard required by applicable law.</p>
+      </section>
+
+      <section class="clause" id="s9">
+        <div class="clause-head"><span class="sec">§09</span><h2>Data retention</h2></div>
+        <p>We keep your account and ledger data for as long as your account is active. When you delete your account, we delete or anonymize your personal data within <em class="fill">[e.g. 30 days]</em>, except where we must retain limited records to meet legal, tax, or security obligations. You can delete individual entries at any time from within the app.</p>
+      </section>
+
+      <section class="clause" id="s10">
+        <div class="clause-head"><span class="sec">§10</span><h2>Your rights &amp; choices</h2></div>
+        <p>Depending on where you live, you may have the right to:</p>
+        <ul>
+          <li>access the personal data we hold about you;</li>
+          <li>correct data that is inaccurate;</li>
+          <li>delete your data (“right to be forgotten”);</li>
+          <li>export your data in a portable format;</li>
+          <li>object to or restrict certain processing;</li>
+          <li>withdraw consent where we relied on it.</li>
+        </ul>
+        <p>You can exercise most of these directly in the app, or by contacting us at <em class="fill">[privacy@yourdomain]</em>. We will not discriminate against you for exercising your rights. If you are in the EEA or UK you may also complain to your local data protection authority. If you are in California, you have rights under the CCPA/CPRA, including the right to know and delete, and the right to opt out of “sharing” — noting that we do not sell or share your data as those terms are defined.</p>
+      </section>
+
+      <section class="clause" id="s11">
+        <div class="clause-head"><span class="sec">§11</span><h2>Children’s privacy</h2></div>
+        <p>Daftar is not directed to children under <em class="fill">[13 / 16, per your target markets]</em>, and we do not knowingly collect their personal data. If you believe a child has provided us information, contact us and we will delete it.</p>
+      </section>
+
+      <section class="clause" id="s12">
+        <div class="clause-head"><span class="sec">§12</span><h2>Local &amp; browser storage</h2></div>
+        <p>On the web, Daftar uses local and browser storage to keep you signed in and to remember your settings. These are essential to how the app works rather than advertising trackers. We do not use third-party advertising cookies.</p>
+      </section>
+
+      <section class="clause" id="s13">
+        <div class="clause-head"><span class="sec">§13</span><h2>Changes to this policy</h2></div>
+        <p>We may update this policy as the app evolves. When we make material changes, we will update the “Last updated” date above and, where appropriate, notify you in the app or by email. Continuing to use Daftar after an update means you accept the revised policy.</p>
+      </section>
+
+      <section class="clause" id="s14">
+        <div class="clause-head"><span class="sec">§14</span><h2>Contact us</h2></div>
+        <p>Questions about this policy or your data? Reach us at:</p>
+        <p class="kv">
+          Email &nbsp;·&nbsp; <em class="fill">[privacy@yourdomain]</em><br>
+          Controller &nbsp;·&nbsp; <em class="fill">[Company legal name]</em><br>
+          Address &nbsp;·&nbsp; <em class="fill">[registered address]</em>
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="doc-foot">
+    <span>Daftar · Income &amp; Expense Manager</span>
+    <span>Privacy Policy v1.0 — 13 Jul 2026</span>
+  </footer>
+
+</body>
+</html>
